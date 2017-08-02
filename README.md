@@ -8,6 +8,10 @@ A URL handler for **Sublime Text 3** on Mac OSX. Made using JavaScript for Autom
 - Extract SublimeUrl.app and place in your user **Applications** directory.
 - Run once to register the handler (this app isn't signed, so you'll probably have to right-click and select "Open").
 
+## Uninstallation
+
+Just delete the app.
+
 ## How to use
 
 Have your debugging tool/exception handling produce URLs in the following format:  
