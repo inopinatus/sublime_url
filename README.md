@@ -6,7 +6,7 @@ A URL handler for **Sublime Text 3** on Mac OSX. Made using JavaScript for Autom
 
 - Download the current release: [SublimeUrl-1.0.zip](https://github.com/inopinatus/sublime_url/releases/download/v1.0/SublimeUrl-v1.0.zip)
 - Extract SublimeUrl.app and place in your user **Applications** directory.
-- Run once to register the handler.
+- Run once to register the handler (this app isn't signed, so you'll probably have to right-click and select "Open").
 
 ## How to use
 
