@@ -29,7 +29,7 @@ This add-on was developed specifically for use with the [Better Errors](https://
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/inopinatus/sublime_url.
+Bug reports and pull requests are welcome on GitHub at https://github.com/inopinatus/sublime_url. The `.scpt` files can be edited with the standard Script Editor.
 
 ## History
 
