@@ -1,6 +1,6 @@
 # Sublime Text URL handler
 
-A URL handler for **Sublime Text 3** on Mac OSX. Made using JavaScript for Automation. Tested on Mac OS Sierra 10.12.6.  Implements a Sublime Text variant of the [TextMate URL scheme](http://blog.macromates.com/2007/the-textmate-url-scheme/).
+A URL handler for **Sublime Text 3** on Mac OSX. Made using JavaScript for Automation. Tested on Mac OS Sierra 10.12.6 and High Sierra 10.13.1.  Implements a Sublime Text variant of the [TextMate URL scheme](http://blog.macromates.com/2007/the-textmate-url-scheme/).
 
 ## Installation
 
