@@ -27,6 +27,11 @@ Examples:
 
 `url` is required and the file must exist or an error is given.  SublimeUrl expects to find Sublime Text in `/Applications/Sublime Text.app`.
 
+## Homestead mapping to MacOS
+In case you are using Homestead you can provide a single line mapping to `.sublime_url` in your home directory.
+The format is: `<from> <to>`
+e.g. `/home/vagrant/ /Users/MyUsername/path/to/laravel_project/`
+
 ## Sublime Text and Ruby on Rails errors
 
 This add-on was developed specifically for use with the [Better Errors](https://github.com/charliesome/better_errors) gem although it should work with anything that follows the specified URL format.  See the [Better Errors Wiki](https://github.com/charliesome/better_errors/wiki) for more information.
