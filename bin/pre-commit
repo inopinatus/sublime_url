@@ -74,7 +74,7 @@ fi
 
 if [ -n "$actions" ]; then
 	[ -n "$errors" ] && echo
-	echo "==> pre-commit action required:"
+	echo "==> action required:"
 	list actions[@]
 fi
 
