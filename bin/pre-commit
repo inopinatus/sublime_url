@@ -1,35 +1,83 @@
 #!/bin/bash
 #
-# Check that the staged contents of src/ matches the staged decompilation of SublimeUrl.app/Contents/Resources/Scripts/
+# pre-commit for inopinatus/sublime_url
+#
+# Check that the staged contents of src/ matches the staged decompilation of
+# SublimeUrl.app/Contents/Resources/Scripts/ and that correct whitespace has
+# been used.
 #
 
 SCPTDIR=SublimeUrl.app/Contents/Resources/Scripts
 TXTDIR=src
-DECOMPILER=/usr/bin/osadecompile
-TMPDIR=$(mktemp -d)
+DECOMP=/usr/bin/osadecompile
 GIT=git
 CMP="cmp -s"
+GREP=grep
 
-errors=""
-compare_staged () {
-	SCPT=$1
-	TXT=$2
-
-	$GIT show ":${SCPTDIR}/${SCPT}"    > "${TMPDIR}/script_binary"
-  $GIT show ":${TXTDIR}/${TXT}"      > "${TMPDIR}/script_text"
- 
-	if ! $DECOMPILER "${TMPDIR}/script_binary" | $CMP "${TMPDIR}/script_text"; then
-		errors="${errors}${TXTDIR}/${TXT} does not match decompiled ${SCPTDIR}/${SCPT}\n"
-	fi
+declare -a errors
+error () {
+	errors+=("$1: $2")
 }
 
-compare_staged jsHandler.scpt jsHandler.scpt.js
-compare_staged main.scpt main.scpt.script
+declare -a actions
+action () {
+	actions+=("$1")
+}
 
-rm -r "${TMPDIR}"
+list () {
+	local -a array=("${!1}")
+	for item in "${array[@]}"; do
+		echo -e "* $item"
+	done
+}
 
-if [ "${errors}" != "" ]; then
-	echo "==> pre-commit errors found:"
-  echo -ne "${errors}"
+check_staged () {
+	scpt="${SCPTDIR}/$1"
+	txt="${TXTDIR}/$2"
+
+	tmp_bin=$(mktemp -t staged-binary)
+	tmp_txt=$(mktemp -t staged-text)
+
+	$GIT show ":${scpt}" > "$tmp_bin"
+	$GIT show ":${txt}"  > "$tmp_txt"
+
+	# All indent must be tabs, and all tabs must be indent.
+	if $DECOMP "$tmp_bin" | grep -v '^$' | grep -qv $'^\t*[^\t ]'; then
+		error "$scpt" "has non-tab indentation"
+		action "ensure all indent within ${scpt} uses tabs"
+	fi
+
+	# Lines may not terminate with whitespace.
+	if $DECOMP "$tmp_bin" | grep -q $'[\t ]$'; then
+		error "$scpt" "has trailing whitespace"
+		action "clear trailing whitespace within ${scpt}"
+	fi
+
+	# text must match decompiled binary
+	if ! $DECOMP "$tmp_bin" | $CMP "$tmp_txt"; then
+		error "$txt" "does not match decompiled ${scpt}"
+		action "re-run decompile.sh"
+		action "commit ${scpt} and ${txt} together"
+	fi
+
+	rm "$tmp_bin" "$tmp_txt"
+}
+
+
+check_staged jsHandler.scpt jsHandler.scpt.js
+check_staged main.scpt main.scpt.script
+
+if [ -n "$errors" ]; then
+	echo "==> pre-commit errors:"
+	list errors[@]
+fi
+
+if [ -n "$actions" ]; then
+	[ -n "$errors" ] && echo
+	echo "==> pre-commit action required:"
+	list actions[@]
+fi
+
+if [ -n "$errors" -o -n "$actions" ]; then
 	exit 1
 fi
