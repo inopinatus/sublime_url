@@ -14,19 +14,15 @@ GIT=git
 CMP="cmp -s"
 GREP=grep
 
-declare -a errors
+declare -a errors actions
 error () {
 	errors+=("$1: $2")
 }
-
-declare -a actions
 action () {
 	actions+=("$1")
 }
-
 list () {
-	local -a array=("${!1}")
-	for item in "${array[@]}"; do
+	for item in "${!1}"; do
 		echo -e "* $item"
 	done
 }
@@ -42,13 +38,13 @@ check_staged () {
 	$GIT show ":${txt}"  > "$tmp_txt"
 
 	# All indent must be tabs, and all tabs must be indent.
-	if $DECOMP "$tmp_bin" | grep -v '^$' | grep -qv $'^\t*[^\t ]'; then
+	if $DECOMP "$tmp_bin" | grep -v '^$' | grep -qv '^\t*\S'; then
 		error "$scpt" "has non-tab indentation"
 		action "ensure all indent within ${scpt} uses tabs"
 	fi
 
 	# Lines may not terminate with whitespace.
-	if $DECOMP "$tmp_bin" | grep -q $'[\t ]$'; then
+	if $DECOMP "$tmp_bin" | grep -q '\s$'; then
 		error "$scpt" "has trailing whitespace"
 		action "clear trailing whitespace within ${scpt}"
 	fi
@@ -64,17 +60,18 @@ check_staged () {
 }
 
 
+echo "==> Running pre-commit checks"
+
 check_staged jsHandler.scpt jsHandler.scpt.js
 check_staged main.scpt main.scpt.script
 
 if [ -n "$errors" ]; then
-	echo "==> pre-commit errors:"
+	echo -e "\n==> pre-commit errors:"
 	list errors[@]
 fi
 
 if [ -n "$actions" ]; then
-	[ -n "$errors" ] && echo
-	echo "==> action required:"
+	echo -e "\n==> action required:"
 	list actions[@]
 fi
 
