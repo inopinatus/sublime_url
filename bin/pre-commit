@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Check that the staged contents of src/ matches the staged decompilation of SublimeUrl.app/Contents/Resources/Scripts/
+#
+
+SCPTDIR=SublimeUrl.app/Contents/Resources/Scripts
+TXTDIR=src
+DECOMPILER=/usr/bin/osadecompile
+TMPDIR=$(mktemp -d)
+GIT=git
+CMP="cmp -s"
+
+errors=""
+compare_staged () {
+	SCPT=$1
+	TXT=$2
+
+	$GIT show ":${SCPTDIR}/${SCPT}"    > "${TMPDIR}/script_binary"
+  $GIT show ":${TXTDIR}/${TXT}"      > "${TMPDIR}/script_text"
+ 
+	if ! $DECOMPILER "${TMPDIR}/script_binary" | $CMP "${TMPDIR}/script_text"; then
+		errors="${errors}${TXTDIR}/${TXT} does not match decompiled ${SCPTDIR}/${SCPT}\n"
+	fi
+}
+
+compare_staged jsHandler.scpt jsHandler.scpt.js
+compare_staged main.scpt main.scpt.script
+
+rm -r "${TMPDIR}"
+
+if [ "${errors}" != "" ]; then
+	echo "==> pre-commit errors found:"
+  echo -ne "${errors}"
+	exit 1
+fi
