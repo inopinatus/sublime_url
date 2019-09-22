@@ -35,11 +35,11 @@ This add-on was developed specifically for use with the [Better Errors](https://
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/inopinatus/sublime_url. The `.scpt` files can be edited with the standard Script Editor.  Please ensure that the `src/` directory contains the decompiled text of each script.  Two utilities are provided for your convenience:
 
-##### `install-git-hooks.sh`
+##### `bin/install-git-hooks.sh`
 
-This will install a pre-commit hook that checks the texts against each decompiled binary.
+This will install a pre-commit git hook that checks `src/` texts for binary consistency and for whitespace errors.
 
-##### `decompile.sh`
+##### `bin/decompile.sh`
 
 This will update the contents of `src/` by decompiling the contents of the `.scpt` files.
 
