@@ -8,3 +8,4 @@ end open location
 on run
 	display dialog "Sublime Text URL handler registered"
 end run
+
