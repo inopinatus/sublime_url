@@ -14,14 +14,19 @@ function run(argv) {
 	let isDirectory = Ref();
 	const fileExists = $.NSFileManager.defaultManager.fileExistsAtPathIsDirectory(file, isDirectory);
 
-	if (fileExists && isDirectory[0] !== 1) {
+	if (fileExists && isDirectory[0] !== true) {
 		// Safely call the binary using Foundation framework
 		let task = $.NSTask.alloc.init
 		task.launchPath = sublimeTextBinary
 		task.arguments = [`${file}:${params.line}:${params.column}`]
 		task.launch
+	} else if (fileExists && isDirectory[0] === true) {
+		// Safely call the binary using Foundation framework
+		let task = $.NSTask.alloc.init
+		task.launchPath = sublimeTextBinary
+		task.arguments = [`${file}`]
+		task.launch
 	} else {
 		app.displayAlert(`File not found: ${file}`)
 	}
 }
-
