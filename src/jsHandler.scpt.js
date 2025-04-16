@@ -18,7 +18,10 @@ function run(argv) {
 		// Safely call the binary using Foundation framework
 		let task = $.NSTask.alloc.init
 		task.launchPath = sublimeTextBinary
-		task.arguments = [`${file}:${params.line}:${params.column}`]
+		let column = params.column;
+		let line = params.line || (column ? 1 : undefined); // normalize line to 1 if column is present
+		let path = [file, line, column].filter(v => v).join(":");
+		task.arguments = [path]
 		task.launch
 	} else {
 		app.displayAlert(`File not found: ${file}`)

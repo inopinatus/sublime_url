@@ -50,7 +50,7 @@ check_staged () {
 	fi
 
 	# text must match decompiled binary
-	if ! $DECOMP "$tmp_bin" | $CMP "$tmp_txt"; then
+	if ! $DECOMP "$tmp_bin" | $CMP "$tmp_txt" -; then
 		error "$txt" "does not match decompiled ${scpt}"
 		action "re-run decompile.sh"
 		action "commit ${scpt} and ${txt} together"
