@@ -4,7 +4,7 @@ A URL handler for **Sublime Text 3** on Mac OSX.
 
 Implements a Sublime Text variant of the [TextMate URL scheme](http://blog.macromates.com/2007/the-textmate-url-scheme/).
 
-Made using JavaScript for Automation.  Originally written for Mac OS Sierra 10.12.6, and still works with Big Sur (11.2) and Catalina (10.15) as of February 2021.
+Made using JavaScript for Automation.  Originally written for Mac OS Sierra 10.12.6, and still works with Sequoia (15.4) as of April 2025.
 
 ## Installation
 
@@ -44,6 +44,9 @@ This will install a pre-commit git hook that checks `src/` texts for binary cons
 This will update the contents of `src/` by decompiling the contents of the `.scpt` files.
 
 ## History
+
+#### Version 1.1
+Update to resolve misbehaviour when the column parameter is not defined. Fix from [Matthias Portzel](https://github.com/MatthiasPortzel).
 
 #### Version 1.0
 This project was written from scratch as a drop-in replacement for the *Subl* handler by [Dave Houlbrooke](https://github.com/dhoulb) which has since been retired.
