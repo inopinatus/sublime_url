@@ -6,6 +6,6 @@ end open location
 
 # Confirm registration with popup.
 on run
-	display dialog "Sublime Text URL handler registered"
+	display dialog "Sublime Text URL handler. Visit https://github.com/inopinatus/sublime_url for more information." buttons {"Understood"} default button 1
 end run
 
