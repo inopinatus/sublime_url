@@ -8,7 +8,7 @@ Made using JavaScript for Automation.  Originally written for Mac OS Sierra 10.1
 
 ## Installation
 
-- Download the current release: [SublimeUrl-1.0.zip](https://github.com/inopinatus/sublime_url/releases/download/v1.0/SublimeUrl-v1.0.zip)
+- Download the current release: [SublimeUrl-1.1.zip](https://github.com/inopinatus/sublime_url/releases/download/v1.1/SublimeUrl-v1.1.zip)
 - Extract SublimeUrl.app and place in your user **Applications** directory.
 - Run once to register the handler.
 
