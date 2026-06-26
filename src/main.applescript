@@ -1,11 +1,10 @@
 # Event handler wrapper for our actual logic.
 # Only necessary until JXA can handle open location events.
 on open location sublime_url
-	run script (path to resource "jsHandler.scpt" in directory "Scripts") with parameters {{|URL|:sublime_url}}
+	run script (path to resource "url-handler.scpt" in directory "Scripts") with parameters {{|URL|:sublime_url}}
 end open location
 
 # Confirm registration with popup.
 on run
 	display dialog "Sublime Text URL handler. Visit https://github.com/inopinatus/sublime_url for more information." buttons {"Understood"} default button 1
 end run
-
